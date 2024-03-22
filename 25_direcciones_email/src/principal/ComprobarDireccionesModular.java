@@ -4,8 +4,13 @@ public class ComprobarDireccionesModular {
 
 	public static void main(String[] args) {
 		
-		String emails="pepe@gmail.com,cachito@hotmail.com,tania@holaquetal.es,cc@gmail.com,"
-				+ "carla@yahoo.es,aaa@gmail.com";
+		String emails="""				
+				pepe@gmail.com,
+				cachito@hotmail.com,
+				tania@holaquetal.es,
+				cc@gmail.com,
+				carla@yahoo.es,
+				aaa@gmail.com""";
 		
 		// indicar cuantas direcciones hay de cada dominio (.es, .com)
 		
