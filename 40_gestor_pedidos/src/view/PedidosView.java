@@ -53,19 +53,24 @@ public class PedidosView {
 	
 	}
 	
-	static void agregarPedido() throws ParseException {		
+	static void agregarPedido() {		
 		Scanner sc = new Scanner(System.in);		
 		SimpleDateFormat format=new SimpleDateFormat("dd/MM/yyyy");	
 		System.out.println("Introduce producto: ");
 		String producto = sc.nextLine();
 		System.out.println("Introduce unidades de producto: ");
 		int unidades = Integer.parseInt(sc.nextLine());
-	    System.out.println("Introduce fecha del pedido: (dd/MM/yyyy) ");
-		String fecha = sc.nextLine();			
-		Date date=format.parse(fecha);
-		Pedido pedido = new Pedido(producto, unidades, date);				
-		
-		service.nuevoPedido(pedido);
+	    System.out.println("Introduce fecha del pedido: (dd/MM/yyyy) ");		
+	    try {
+	    	String fecha = sc.nextLine();
+			Date date=format.parse(fecha);
+			Pedido pedido = new Pedido(producto, unidades, date);
+			service.nuevoPedido(pedido);
+	    } catch(ParseException ex) {
+	    	ex.printStackTrace();  // sólo en la fase de desarrollo, para que nos de información sobre le error
+	    	System.out.println("no está bien metida la fecha");
+	    }
+			
 		
 	}
 	
@@ -81,19 +86,24 @@ public class PedidosView {
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat format=new SimpleDateFormat("dd/MM/yyyy");		
 		System.out.println("Introduce las fecha inicial: (dd/MM/yyyy) ");
-		String fecha1 = sc.nextLine();		
-		Date date1=format.parse(fecha1);
-		System.out.println("Introduce las fecha final: (dd/MM/yyyy) ");
-		String fecha2 = sc.nextLine();	
-		Date date2=format.parse(fecha2);
-		
-		ArrayList<Pedido> resultados = service.pedidosEntreFecha(date1, date2);
-		
-		for(Pedido p: resultados) {
-			System.out.println(" Producto: " + p.getProducto() + " Unidades: " + p.getUnidades() + 
-					" Fecha pedido: " + p.getFechaPedido());
+		try {
+			String fecha1 = sc.nextLine();		
+			Date date1=format.parse(fecha1);
+			System.out.println("Introduce las fecha final: (dd/MM/yyyy) ");
+			String fecha2 = sc.nextLine();	
+			Date date2=format.parse(fecha2);
+			
+			ArrayList<Pedido> resultados = service.pedidosEntreFecha(date1, date2);
+			
+			for(Pedido p: resultados) {
+				System.out.println(" Producto: " + p.getProducto() + " Unidades: " + p.getUnidades() + 
+						" Fecha pedido: " + p.getFechaPedido());
+			}
 		}
-		
+		catch(ParseException ex) {
+			ex.printStackTrace();  // sólo en la fase de desarrollo, para que nos de información sobre le error
+			System.out.println("Fecha no válida");
+		}
 	}
 
 }

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import model.Pedido;
@@ -19,30 +20,39 @@ public class PedidosView {
 		
 		
 		Scanner sc = new Scanner(System.in);
-		int opcion;		
+		int opcion = 0;
+		
 		do {
 			System.out.println("Seleccione opción: ");			
 			presentarMenu();
-			opcion = sc.nextInt();
-			switch (opcion) {
-			case 1:
-				agregarPedido();
-				break;
-			case 2:
-				buscarMasReciente();
-				break;
-			case 3:
-				buscarDosFechas();
-				break;	
-			case 4: 
-				PedidoProximoFecha();
-			case 5:
-				System.out.println("hasta luego");
-				break;
-			default: 
-				System.out.println("opción no válida");
-			}
+			try {
+			opcion = Integer.parseInt(sc.nextLine());		
+			
+				switch (opcion) {
+				case 1:
+					agregarPedido();
+					break;
+				case 2:
+					buscarMasReciente();
+					break;
+				case 3:
+					buscarDosFechas();
+					break;	
+				case 4: 
+					PedidoProximoFecha();
+				case 5:
+					System.out.println("hasta luego");
+					break;
+				default: 
+					System.out.println("opción no válida");
+				}
+			} catch(NumberFormatException ex){
+				System.out.println("Debe introducir un número ");	
+			}			
+			
 		}while(opcion!=5);
+		
+		
 
 	}
 	
@@ -58,19 +68,18 @@ public class PedidosView {
 	
 	}
 	
-	static void agregarPedido() throws ParseException {		
+	static void agregarPedido()  {		
 		Scanner sc = new Scanner(System.in);		
-		DateTimeFormatter format= DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		System.out.println("Introduce producto: ");
-		String producto = sc.nextLine();
-		System.out.println("Introduce unidades de producto: ");
-		int unidades = Integer.parseInt(sc.nextLine());
-	    System.out.println("Introduce fecha del pedido: (dd/MM/yyyy) ");
-		String fecha = sc.nextLine();				
-		LocalDate date=LocalDate.parse(fecha, format);		
-		Pedido pedido = new Pedido(producto, unidades, date);				
-		
-		service.nuevoPedido(pedido);
+		DateTimeFormatter format= DateTimeFormatter.ofPattern("dd/MM/yyyy");	
+			System.out.println("Introduce producto: ");
+			String producto = sc.nextLine();
+			System.out.println("Introduce unidades de producto: ");
+			int unidades = Integer.parseInt(sc.nextLine());
+		    System.out.println("Introduce fecha del pedido: (dd/MM/yyyy) ");
+			String fecha = sc.nextLine();				
+			LocalDate date=LocalDate.parse(fecha, format);		
+			Pedido pedido = new Pedido(producto, unidades, date);	
+			service.nuevoPedido(pedido);	
 		
 	}
 	
