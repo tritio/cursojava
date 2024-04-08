@@ -35,7 +35,7 @@ public class PedidosView {
 				buscarDosFechas();
 				break;	
 			case 4: 
-				// TODO obtener pedido más próxima a una fecha dada
+				PedidoProximoFecha();
 			case 5:
 				System.out.println("hasta luego");
 				break;
@@ -100,6 +100,18 @@ public class PedidosView {
 			System.out.println(" Producto: " + p.getProducto() + " Unidades: " + p.getUnidades() + 
 					" Fecha pedido: " + p.getFechaPedido().format(sdf));
 		}
+		
+	}
+	
+	static void PedidoProximoFecha() {
+		Scanner sc = new Scanner(System.in);
+		DateTimeFormatter sdf= DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		System.out.println("Introduce las fecha a buscar: (dd/MM/yyyy) ");
+		String fecha = sc.nextLine();	
+		LocalDate date=LocalDate.parse(fecha, sdf);
+		System.out.println("el producto más próximo a la fecha: " + fecha +  " es: " + 
+		service.pedidoProximoFecha(date).getProducto());
+		
 		
 	}
 

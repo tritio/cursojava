@@ -39,11 +39,15 @@ class TestPedidoService {
 	void testPedidosEntreFecha() {
 		
 		LocalDate fmin = LocalDate.of(2022,1,1);
-		LocalDate fmax = LocalDate.of(2022,12,31);
+		LocalDate fmax = LocalDate.of(2022,12,31);		
 		
-		
-		assertEquals(2, service.pedidosEntreFecha(fmin, fmax).size());
-		
+		assertEquals(2, service.pedidosEntreFecha(fmin, fmax).size());		
 	}
+	@Test
+	void testPedidosProximoFecha() {
+		assertEquals("coca-cola", service.pedidoProximoFecha(LocalDate.of(2023, 12, 7)).getProducto());
+		assertEquals("patatas fritas", service.pedidoProximoFecha(LocalDate.of(2022, 04, 7)).getProducto());
+	}
+	
 
 }

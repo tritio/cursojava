@@ -1,6 +1,7 @@
 package service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -35,6 +36,16 @@ public class PedidoService {
 			}
 			return entreFechas;
 			
+		}
+		
+		public Pedido pedidoProximoFecha(LocalDate fecha) {			
+			Pedido pedido = new Pedido("", 0, LocalDate.of(0,1,1));
+			for(Pedido p:pedidos) {
+				if(Math.abs(ChronoUnit.DAYS.between(pedido.getFechaPedido(), fecha)) > Math.abs(ChronoUnit.DAYS.between(p.getFechaPedido(), fecha))){				
+					pedido = p;
+				}			  
+			}
+			return pedido;
 		}
 }
 		
